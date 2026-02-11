@@ -1,0 +1,2 @@
+# SalWatch
+GitHubリポジトリに変更があったらDiscordに通知が行くようにするもの
