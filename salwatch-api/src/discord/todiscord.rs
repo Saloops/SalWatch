@@ -1,16 +1,12 @@
 use reqwest::Client;
 use serde::{Deserialize, Serialize};
+use crate::discord::message_builder;
 
-#[derive(Debug, Serialize, Deserialize)]
-struct DiscordMessage {
-    content: String,
-}
-
-pub async fn send_to_discord(webhook_url: &str, message: &str) -> Result<(), reqwest::Error> {
+pub async fn send_to_discord<T: Serialize>(
+    webhook_url: &str,
+    payload: &T,
+) -> Result<(), reqwest::Error> {
     let client = Client::new();
-    let payload = DiscordMessage {
-        content: message.to_string(),
-    };
 
     client.post(webhook_url)
         .json(&payload)
