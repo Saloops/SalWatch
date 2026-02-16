@@ -1,0 +1,8 @@
+discord_webhook_url = "xxxxxxxxxxxx"
+github_webhook_url = "xxxx"
+
+[server]
+host = "0.0.0.0"
+port = 3000
+
+//これをconfig.tomlに追加してね♡
