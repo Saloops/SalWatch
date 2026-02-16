@@ -1,32 +1,27 @@
 mod config;
 mod discord;
+mod from_github;
+mod models;
 
+use std::fs;
 use axum::{routing::get, Router};
+use from_github::post_from_github::process_github_event;
+use discord::message_builder::build_message;
 
 #[tokio::main]
 async fn main() {
-    //ペイロードのダミーデータ※あとで消す
-    //===============================
-    struct Payload {
-        repo: String,
-        title: String,
-        author: String,
-        pr_url: String,
-    }
-    let dummy_data = Payload {//ダミーデータ
-        repo: "my-repo".to_string(),
-        title: "My PR Title".to_string(),
-        author: "My Author".to_string(),
-        pr_url: "https://x.com".to_string(),
-    };
-    //===============================
+    //ダミーで処理してるのはここ
+    //================================
+    let json = fs::read_to_string("sample/github_pr.json").unwrap();
+    //================================
+    let event = process_github_event(&json).unwrap();
     let config = config::load_config();
     //TODO::テスト用になってるから実装後に実物に置き換え
     let payload = discord::message_builder::build_message(
-        &dummy_data.repo,
-        &dummy_data.title,
-        &dummy_data.author,
-        &dummy_data.pr_url
+        &event.repo,
+        &event.title,
+        &event.author,
+        &event.pr_url
     );
 
 
