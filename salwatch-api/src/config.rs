@@ -14,3 +14,23 @@ pub fn load_config() -> Config {
     toml::from_str(&context)
         .expect("Failed to parse config.toml")
 }
+
+//サーバーの設定を追加(ローカル版)
+#[derive(Debug, Deserialize)]
+pub struct ServerConfig {
+    pub host: String,
+    pub port: u16,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct AppConfig {
+    pub server: ServerConfig,
+}
+
+pub fn load_app_config() -> AppConfig {
+    let context = fs::read_to_string("config.toml")
+        .expect("Failed to read config.toml");
+    
+    toml::from_str(&context)
+        .expect("Failed to parse config.toml")
+}

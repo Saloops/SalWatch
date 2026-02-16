@@ -13,15 +13,21 @@ pub fn process_github_event(json: &str) -> Result<ChangeEvent, String> {
     //================================
     //必要な情報の抽出
     //================================
-
+    let pr = match payload.pull_request {
+        Some(pr) => pr,
+        None => return Err("No pull request data found".to_string()),
+    };
+    if payload.action != "opened" {
+        return Err("Pull request action is not 'opened'".to_string());
+    }
     //================================
     //Discordに送るためのペイロードの作成
     //================================
     let event = ChangeEvent {
         repo: payload.repository.full_name,
-        title: payload.pull_request.title,
-        author: payload.pull_request.user.login,
-        pr_url: payload.pull_request.html_url,
+        title: pr.title,
+        author: pr.user.login,
+        pr_url: pr.html_url,
     };
     //================================
     Ok(event)

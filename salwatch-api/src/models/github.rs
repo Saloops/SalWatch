@@ -3,8 +3,9 @@ use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
 pub struct GitHubWebhook {
+    pub action: String,
     pub repository: Repository,
-    pub pull_request: PullRequest,
+    pub pull_request: Option<PullRequest>,
 }
 
 #[derive(Debug, Deserialize)]

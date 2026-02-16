@@ -1,7 +1,7 @@
 {
   "action": "opened",
   "pull_request": {
-    "title": "テスト用PR#1",
+    "title": "テスト用PR#2",
     "html_url": "https://x.com",
     "user": {
       "login": "m4skedvanir"
